@@ -1,4 +1,4 @@
-import { AssembledTransaction, Client as ContractClient, ClientOptions as ContractClientOptions } from '@stellar/stellar-sdk/contract';
+import { AssembledTransaction, Client as ContractClient, ClientOptions as ContractClientOptions, Result } from '@stellar/stellar-sdk/contract';
 import type { u32, u64 } from '@stellar/stellar-sdk/contract';
 export * from '@stellar/stellar-sdk';
 export * as contract from '@stellar/stellar-sdk/contract';
@@ -6,7 +6,12 @@ export * as rpc from '@stellar/stellar-sdk/rpc';
 export declare const networks: {
     readonly testnet: {
         readonly networkPassphrase: "Test SDF Network ; September 2015";
-        readonly contractId: "CAU4MPUT3SR4NRPOIAVQ4N2ET7FUWHBCKTMUKF65Q5KPAQQMCTSOFOSO";
+        readonly contractId: "CAFUQONPIJP7ZBXSZCHAY2PIHY4PSGSU2OGJ3HKVD62APNWC5HJS6HVU";
+    };
+};
+export declare const Errors: {
+    1: {
+        message: string;
     };
 };
 export type YeetKey = {
@@ -15,11 +20,11 @@ export type YeetKey = {
 };
 export interface Yeet {
     author: string;
+    id: string;
     likes: u64;
     message: string;
-    replies: Array<Yeet>;
+    parent_id: string;
 }
-export declare const Errors: {};
 export interface Client {
     /**
      * Construct and simulate a yeet transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
@@ -46,10 +51,11 @@ export interface Client {
     /**
      * Construct and simulate a reply transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
      */
-    reply: ({ user, reply, id, added_validity }: {
+    reply: ({ user, reply, id, parent_id, added_validity }: {
         user: string;
         reply: string;
         id: string;
+        parent_id: string;
         added_validity: u32;
     }, options?: {
         /**
@@ -64,7 +70,7 @@ export interface Client {
          * Whether to automatically simulate the transaction when constructing the AssembledTransaction. Default: true
          */
         simulate?: boolean;
-    }) => Promise<AssembledTransaction<Yeet>>;
+    }) => Promise<AssembledTransaction<Result<Yeet>>>;
     /**
      * Construct and simulate a sheesh transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
      */
@@ -111,7 +117,7 @@ export declare class Client extends ContractClient {
     constructor(options: ContractClientOptions);
     readonly fromJSON: {
         yeet: (json: string) => AssembledTransaction<Yeet>;
-        reply: (json: string) => AssembledTransaction<Yeet>;
+        reply: (json: string) => AssembledTransaction<Result<Yeet, import("@stellar/stellar-sdk/contract").ErrorMessage>>;
         sheesh: (json: string) => AssembledTransaction<Yeet>;
         get_yeet: (json: string) => AssembledTransaction<Yeet>;
     };
