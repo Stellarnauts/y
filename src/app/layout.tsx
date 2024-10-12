@@ -27,7 +27,7 @@ export default function Root({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans min-h-dvh flex flex-col`}
       >
         <Providers>{children}</Providers>
       </body>

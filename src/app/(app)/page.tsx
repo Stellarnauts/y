@@ -1,25 +1,66 @@
 "use client";
 
 import { ErrorAlert } from "@/components/ErrorAlert";
-import { Card, CardContent, CardFooter } from "@/components/shadcn/card";
 import { Skeleton } from "@/components/shadcn/skeleton";
+import { Yeet } from "@/components/Yeet";
+import { useWhoamiContext } from "@/hooks/useWhoamiContext";
+import { y } from "@/lib/contracts/y";
+import { account } from "@/lib/passkey/client";
 import { trpc } from "@/trpc/client";
-import { format } from "date-fns/format";
+import { useQueryClient } from "@tanstack/react-query";
+import { getQueryKey } from "@trpc/react-query";
 import { toast } from "sonner";
 import { YeetForm } from "./YeetForm";
 
 export default function Start() {
+  const queryClient = useQueryClient();
+
+  const { whoami } = useWhoamiContext();
+
   const yeetsQuery = trpc.yeets.list.useQuery();
 
   const createYeetMutation = trpc.yeets.create.useMutation({
-    onSuccess: (yeet) => toast.success(yeet.id),
+    onSuccess: async () => {
+      toast.success("Yeet has been yeeted!");
+
+      await queryClient.invalidateQueries({
+        queryKey: getQueryKey(trpc.yeets.list),
+      });
+    },
   });
 
   return (
     <>
       <div className="space-y-8">
         <div className="space-y-4">
-          <YeetForm onSubmit={(data) => createYeetMutation.mutateAsync(data)} />
+          <YeetForm
+            onSubmit={async (data) => {
+              if (!whoami) {
+                return;
+              }
+
+              const id = crypto.randomUUID();
+
+              const wallet = await account.connectWallet({
+                keyId: whoami.keyId,
+              });
+
+              const tx = await y.yeet({
+                id,
+                initial_validity: 100,
+                message: data.message,
+                user: wallet.contractId,
+              });
+
+              const signed = await account.sign(tx.toXDR(), {
+                keyId: wallet.keyId,
+              });
+
+              await createYeetMutation.mutateAsync({
+                data: signed.built!.toXDR(),
+              });
+            }}
+          />
           {createYeetMutation.isError && (
             <ErrorAlert message={createYeetMutation.error.message} />
           )}
@@ -34,18 +75,7 @@ export default function Start() {
           ) : yeetsQuery.isError ? (
             <ErrorAlert message={yeetsQuery.error.message} />
           ) : (
-            yeetsQuery.data.map((yeet) => (
-              <Card key={yeet.id}>
-                <CardContent className="pt-6">
-                  <p>{yeet.message}</p>
-                </CardContent>
-                <CardFooter>
-                  <p className="text-xs text-muted-foreground">
-                    {format(new Date(yeet.createdAt), "yyyy-MM-dd HH:mm:ss")}
-                  </p>
-                </CardFooter>
-              </Card>
-            ))
+            yeetsQuery.data.map((yeet) => <Yeet key={yeet.id} yeet={yeet} />)
           )}
         </div>
       </div>

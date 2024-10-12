@@ -6,12 +6,16 @@ export * as rpc from '@stellar/stellar-sdk/rpc';
 export declare const networks: {
     readonly testnet: {
         readonly networkPassphrase: "Test SDF Network ; September 2015";
+<<<<<<< HEAD
         readonly contractId: "CAFUQONPIJP7ZBXSZCHAY2PIHY4PSGSU2OGJ3HKVD62APNWC5HJS6HVU";
     };
 };
 export declare const Errors: {
     1: {
         message: string;
+=======
+        readonly contractId: "CAU4MPUT3SR4NRPOIAVQ4N2ET7FUWHBCKTMUKF65Q5KPAQQMCTSOFOSO";
+>>>>>>> origin
     };
 };
 export type YeetKey = {
@@ -70,7 +74,11 @@ export interface Client {
          * Whether to automatically simulate the transaction when constructing the AssembledTransaction. Default: true
          */
         simulate?: boolean;
+<<<<<<< HEAD
     }) => Promise<AssembledTransaction<Result<Yeet>>>;
+=======
+    }) => Promise<AssembledTransaction<Yeet>>;
+>>>>>>> origin
     /**
      * Construct and simulate a sheesh transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
      */
@@ -117,7 +125,11 @@ export declare class Client extends ContractClient {
     constructor(options: ContractClientOptions);
     readonly fromJSON: {
         yeet: (json: string) => AssembledTransaction<Yeet>;
+<<<<<<< HEAD
         reply: (json: string) => AssembledTransaction<Result<Yeet, import("@stellar/stellar-sdk/contract").ErrorMessage>>;
+=======
+        reply: (json: string) => AssembledTransaction<Yeet>;
+>>>>>>> origin
         sheesh: (json: string) => AssembledTransaction<Yeet>;
         get_yeet: (json: string) => AssembledTransaction<Yeet>;
     };
