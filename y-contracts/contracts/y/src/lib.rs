@@ -49,7 +49,7 @@ impl YContract {
 
         let yeet_key = YeetKey::Of(id.clone());
 
-        let mut root_yeet: Yeet = env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesnt exist");
+        let mut root_yeet: Yeet = env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesn't exist");
 
         let reply_yeet: Vec<Yeet> = vec![&env, Yeet {
             message: reply,
@@ -73,7 +73,7 @@ impl YContract {
 
         let yeet_key = YeetKey::Of(id.clone());
 
-        let mut root_yeet: Yeet = env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesnt exist");
+        let mut root_yeet: Yeet = env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesn't exist");
 
         root_yeet.likes += 1;
 
@@ -87,11 +87,8 @@ impl YContract {
     pub fn get_yeet(env: Env, id: String) -> Yeet {
         let yeet_key = YeetKey::Of(id.clone());
 
-        env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesnt exist")
+        env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesn't exist")
     }
-
-    // pub fn get_yeets_by_address(env: Env, who: &Address) {}
-
 }
 
 mod test;
