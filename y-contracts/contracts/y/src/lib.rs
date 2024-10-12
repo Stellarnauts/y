@@ -3,15 +3,19 @@ use core::fmt::{Debug, Formatter};
 
 use soroban_sdk::{contract, contractimpl, contracttype, crypto, symbol_short, vec, Address, BytesN, Env, FromVal, String, Symbol, Vec};
 
+const YEET: Symbol = symbol_short!("YEET");
+
 #[contract]
 pub struct YContract;
 
 #[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum YeetKey {
     Of(String)
 }
 
 #[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Yeet {
     message: String,
     author: Address,
@@ -35,7 +39,7 @@ impl YContract {
 
         env.storage().temporary().set(&yeet_key, &submitted_yeet);
 
-        env.events().publish(&yeet_key, submitted_yeet);
+        env.events().publish((YEET, symbol_short!("yeet")), submitted_yeet);
 
         env.storage().temporary().extend_ttl(&yeet_key, initial_validity, initial_validity);
     }
@@ -45,7 +49,7 @@ impl YContract {
 
         let yeet_key = YeetKey::Of(id.clone());
 
-        let mut root_yeet: Yeet = env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesnt exist");
+        let mut root_yeet: Yeet = env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesn't exist");
 
         let reply_yeet: Vec<Yeet> = vec![&env, Yeet {
             message: reply,
@@ -58,6 +62,8 @@ impl YContract {
 
         env.storage().temporary().set(&yeet_key, &root_yeet);
 
+        env.events().publish((YEET, symbol_short!("yeet")), root_yeet);
+
         env.storage().temporary().extend_ttl(&yeet_key, added_validity, added_validity);
 
     }
@@ -67,11 +73,13 @@ impl YContract {
 
         let yeet_key = YeetKey::Of(id.clone());
 
-        let mut root_yeet: Yeet = env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesnt exist");
+        let mut root_yeet: Yeet = env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesn't exist");
 
         root_yeet.likes += 1;
 
         env.storage().temporary().set(&yeet_key, &root_yeet);
+
+        env.events().publish((YEET, symbol_short!("yeet")), root_yeet);
 
         env.storage().temporary().extend_ttl(&yeet_key, added_validity, added_validity);
     }
@@ -79,11 +87,8 @@ impl YContract {
     pub fn get_yeet(env: Env, id: String) -> Yeet {
         let yeet_key = YeetKey::Of(id.clone());
 
-        env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesnt exist")
+        env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesn't exist")
     }
-
-    // pub fn get_yeets_by_address(env: Env, who: &Address) {}
-
 }
 
 mod test;
