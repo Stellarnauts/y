@@ -4,7 +4,7 @@ extern crate std;
 use soroban_sdk::{
     symbol_short,
     testutils::{Address as _, Events},
-    Address, Env, IntoVal,
+    Address, Env, vec, String, IntoVal
 };
 
 use super::*;
