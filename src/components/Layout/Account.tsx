@@ -16,7 +16,7 @@ import { trpc } from "@/trpc/client";
 import { LucideUser } from "lucide-react";
 import React from "react";
 
-export const User: React.FunctionComponent = () => {
+export const Account: React.FunctionComponent = () => {
   const { whoami, signin, signout } = useWhoamiContext();
 
   const signupMutation = trpc.signup.useMutation();

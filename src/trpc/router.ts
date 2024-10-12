@@ -1,7 +1,8 @@
 import { drizzle, schema } from "@/drizzle";
 import { server } from "@/lib/passkey/server";
+import { scValToNative, xdr } from "@stellar/stellar-sdk";
 import { initTRPC, TRPCError } from "@trpc/server";
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { z } from "zod";
 
 const t = initTRPC.create();
@@ -15,11 +16,31 @@ export const router = t.router({
 
       return yeets;
     }),
+    get: t.procedure
+      .input(
+        z.object({
+          id: z.string(),
+        }),
+      )
+      .query(async ({ input }) => {
+        const yeet = await drizzle.query.yeets.findFirst({
+          where: eq(schema.yeets.id, input.id),
+        });
+
+        if (!yeet) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Yeet not found.",
+          });
+        }
+
+        return yeet;
+      }),
     create: t.procedure
       .input(
         z.object({
           data: z.string(),
-        })
+        }),
       )
       .mutation(async ({ input }) => {
         const tx = await server.send(input.data);
@@ -31,14 +52,17 @@ export const router = t.router({
           });
         }
 
-        console.log({ tx });
+        const { id, message, author } = scValToNative(
+          xdr.ScVal.fromXDR(tx.returnValue, "base64"),
+        );
 
         const [yeet] = await drizzle
           .insert(schema.yeets)
           .values({
+            id,
             hash: tx.hash,
-            message: tx.returnValue,
-            createdBy: tx.returnValue,
+            message,
+            createdBy: author,
           })
           .returning();
 
@@ -49,7 +73,7 @@ export const router = t.router({
     .input(
       z.object({
         data: z.string(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       const tx = await server.send(input.data);
