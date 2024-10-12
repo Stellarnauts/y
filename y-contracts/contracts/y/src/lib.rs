@@ -1,7 +1,7 @@
 #![no_std]
 use core::fmt::{Debug, Formatter};
 
-use soroban_sdk::{contract, contractimpl, contracttype, contracterror, crypto, symbol_short, vec, Address, BytesN, Env, FromVal, String, Symbol, Vec};
+use soroban_sdk::{contract, contracterror, contractimpl, contracttype, crypto, storage::Temporary, symbol_short, vec, Address, BytesN, Env, FromVal, String, Symbol, Vec};
 
 const YEET: Symbol = symbol_short!("YEET");
 
@@ -73,10 +73,10 @@ impl YContract {
                 };
 
                 env.storage().temporary().set(&yeet_key, &reply_yeet);
-        
+
                 env.events().publish((YEET, symbol_short!("yeet")), reply_yeet.clone());
 
-                env.storage().temporary().extend_ttl(&yeet_key, added_validity, added_validity);
+                Self::loop_up_the_tree(env, id, added_validity);
 
                 Ok(reply_yeet)
             },
@@ -97,7 +97,7 @@ impl YContract {
 
         env.events().publish((YEET, symbol_short!("yeet")), root_yeet.clone());
 
-        env.storage().temporary().extend_ttl(&yeet_key, added_validity, added_validity);
+        Self::loop_up_the_tree(env, id, added_validity);
 
         root_yeet
     }
@@ -106,6 +106,25 @@ impl YContract {
         let yeet_key = YeetKey::Of(id.clone());
 
         env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesn't exist")
+    }
+
+    fn loop_up_the_tree(env: Env, id: String, added_validity: u32) {
+        let mut temp_id: Option<String> = Some(id); 
+
+        while temp_id.is_some() {
+            let key = YeetKey::Of(temp_id.unwrap().clone());
+
+            match env.storage().temporary().get::<YeetKey, Yeet>(&key) {
+                Some(unwrapped_yeet) => {
+                    env.storage().temporary().extend_ttl(&key, added_validity, added_validity);
+
+                    temp_id = unwrapped_yeet.parent_id;
+                },
+                None => {
+                    break
+                }
+            } 
+        };
     }
 }
 
