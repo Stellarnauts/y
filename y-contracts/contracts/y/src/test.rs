@@ -35,7 +35,8 @@ fn test_yeet() {
                     message: message.clone(),
                     author: user_1.clone(),
                     likes: 0,
-                    replies: Vec::new(&env)
+                    id: id.clone(),
+                    parent_id: String::from_str(&env, ""),
                 }.into_val(&env)
             ),
         ]
@@ -52,12 +53,14 @@ fn test_yeet() {
                     message: message,
                     author: user_1,
                     likes: 1,
-                    replies: Vec::new(&env)
+                    id: id,
+                    parent_id: String::from_str(&env, "")
                 }.into_val(&env)
             ),
         ]
     );
 }
+
 #[test]
 fn test_reply() {
     let env = Env::default();
@@ -85,7 +88,8 @@ fn test_reply() {
                     message: message.clone(),
                     author: user_1.clone(),
                     likes: 0,
-                    replies: Vec::new(&env)
+                    id: id.clone(),
+                    parent_id: String::from_str(&env, ""),
                 }.into_val(&env)
             ),
         ]
@@ -102,20 +106,24 @@ fn test_reply() {
                     message: message.clone(),
                     author: user_1.clone(),
                     likes: 1,
-                    replies: Vec::new(&env)
+                    id: id.clone(),
+                    parent_id: String::from_str(&env, "")
                 }.into_val(&env)
             ),
         ]
     );
 
+    let new_child_id = String::from_str(&env, "aldkfjewopijf");
+
     let reply = Yeet {
         message: String::from_str(&env, "Hell Yeah"),
         author: user_2.clone(),
         likes: 0,
-        replies: Vec::new(&env)
+        id: new_child_id.clone(),
+        parent_id: id.clone() 
     };
 
-    client.reply(&user_2, &reply.message, &id, &40000);
+    client.reply(&user_2, &reply.message, &new_child_id, &id, &40000);
 
     assert_eq!(
         env.events().all(),
@@ -128,26 +136,24 @@ fn test_reply() {
                     message: message.clone(),
                     author: user_1.clone(),
                     likes: 0,
-                    replies: Vec::new(&env)
+                    id: id.clone(),
+                    parent_id: String::from_str(&env, ""),
                 }.into_val(&env)
             ),
             (
                 contract_id.clone(),
                 (YEET, symbol_short!("yeet")).into_val(&env),
                 Yeet {
-                    message: message,
-                    author: user_1,
+                    message: String::from_str(&env, "Hell Yeah"),
+                    author: user_2.clone(),
                     likes: 0,
-                    replies: vec![
-                        &env,
-                        reply
-                    ]
+                    id: new_child_id.clone(),
+                    parent_id: id.clone(),
                 }.into_val(&env)
             ),
         ]
     );
 }
-
 
 #[test]
 fn test_sheesh() {
@@ -176,7 +182,8 @@ fn test_sheesh() {
                     message: message.clone(),
                     author: user_1.clone(),
                     likes: 0,
-                    replies: Vec::new(&env)
+                    id: id.clone(),
+                    parent_id: String::from_str(&env, ""),
                 }.into_val(&env)
             ),
         ]
@@ -193,7 +200,8 @@ fn test_sheesh() {
                     message: message.clone(),
                     author: user_1.clone(),
                     likes: 1,
-                    replies: Vec::new(&env)
+                    id: id.clone(),
+                    parent_id: String::from_str(&env, "")
                 }.into_val(&env)
             ),
         ]
@@ -212,17 +220,19 @@ fn test_sheesh() {
                     message: message.clone(),
                     author: user_1.clone(),
                     likes: 0,
-                    replies: Vec::new(&env)
+                    id: id.clone(),
+                    parent_id: String::from_str(&env, ""),
                 }.into_val(&env)
             ),
             (
                 contract_id.clone(),
                 (YEET, symbol_short!("yeet")).into_val(&env),
                 Yeet {
-                    message: message,
-                    author: user_1,
+                    message: message.clone(),
+                    author: user_1.clone(),
                     likes: 1,
-                    replies: Vec::new(&env)
+                    id: id.clone(),
+                    parent_id: String::from_str(&env, ""),
                 }.into_val(&env)
             ),
         ]
@@ -255,7 +265,8 @@ fn test_get_yeet() {
                     message: message.clone(),
                     author: user_1.clone(),
                     likes: 0,
-                    replies: Vec::new(&env)
+                    id: id.clone(),
+                    parent_id: String::from_str(&env, ""),
                 }.into_val(&env)
             ),
         ]
@@ -272,21 +283,22 @@ fn test_get_yeet() {
                     message: message.clone(),
                     author: user_1.clone(),
                     likes: 1,
-                    replies: Vec::new(&env)
+                    id: id.clone(),
+                    parent_id: String::from_str(&env, "")
                 }.into_val(&env)
             ),
         ]
     );
-
     let res = client.get_yeet(&id);
 
     assert_eq!(
         res,
         Yeet {
-            message: message.clone(),
-            author: user_1.clone(),
+            message: message,
+            author: user_1,
             likes: 0,
-            replies: Vec::new(&env)
+            id: id,
+            parent_id: String::from_str(&env, "")
         }
     );
 

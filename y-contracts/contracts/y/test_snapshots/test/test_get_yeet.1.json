@@ -91,6 +91,14 @@
                     },
                     {
                       "key": {
+                        "symbol": "id"
+                      },
+                      "val": {
+                        "string": "kdjflksd9399kjf"
+                      }
+                    },
+                    {
+                      "key": {
                         "symbol": "likes"
                       },
                       "val": {
@@ -107,10 +115,10 @@
                     },
                     {
                       "key": {
-                        "symbol": "replies"
+                        "symbol": "parent_id"
                       },
                       "val": {
-                        "vec": []
+                        "string": ""
                       }
                     }
                   ]
@@ -277,6 +285,14 @@
                 },
                 {
                   "key": {
+                    "symbol": "id"
+                  },
+                  "val": {
+                    "string": "kdjflksd9399kjf"
+                  }
+                },
+                {
+                  "key": {
                     "symbol": "likes"
                   },
                   "val": {
@@ -293,10 +309,10 @@
                 },
                 {
                   "key": {
-                    "symbol": "replies"
+                    "symbol": "parent_id"
                   },
                   "val": {
-                    "vec": []
+                    "string": ""
                   }
                 }
               ]
@@ -321,7 +337,50 @@
                 "symbol": "yeet"
               }
             ],
-            "data": "void"
+            "data": {
+              "map": [
+                {
+                  "key": {
+                    "symbol": "author"
+                  },
+                  "val": {
+                    "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+                  }
+                },
+                {
+                  "key": {
+                    "symbol": "id"
+                  },
+                  "val": {
+                    "string": "kdjflksd9399kjf"
+                  }
+                },
+                {
+                  "key": {
+                    "symbol": "likes"
+                  },
+                  "val": {
+                    "u64": 0
+                  }
+                },
+                {
+                  "key": {
+                    "symbol": "message"
+                  },
+                  "val": {
+                    "string": "Heeej"
+                  }
+                },
+                {
+                  "key": {
+                    "symbol": "parent_id"
+                  },
+                  "val": {
+                    "string": ""
+                  }
+                }
+              ]
+            }
           }
         }
       },
@@ -380,6 +439,14 @@
                 },
                 {
                   "key": {
+                    "symbol": "id"
+                  },
+                  "val": {
+                    "string": "kdjflksd9399kjf"
+                  }
+                },
+                {
+                  "key": {
                     "symbol": "likes"
                   },
                   "val": {
@@ -396,10 +463,10 @@
                 },
                 {
                   "key": {
-                    "symbol": "replies"
+                    "symbol": "parent_id"
                   },
                   "val": {
-                    "vec": []
+                    "string": ""
                   }
                 }
               ]

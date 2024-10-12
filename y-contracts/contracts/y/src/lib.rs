@@ -1,9 +1,16 @@
 #![no_std]
 use core::fmt::{Debug, Formatter};
 
-use soroban_sdk::{contract, contractimpl, contracttype, crypto, symbol_short, vec, Address, BytesN, Env, FromVal, String, Symbol, Vec};
+use soroban_sdk::{contract, contracterror, contractimpl, contracttype, crypto, storage::Temporary, symbol_short, vec, Address, BytesN, Env, FromVal, String, Symbol, Vec};
 
 const YEET: Symbol = symbol_short!("YEET");
+
+#[contracterror]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+#[repr(u32)]
+pub enum Error {
+    NoParentYeet = 1,
+}
 
 #[contract]
 pub struct YContract;
@@ -19,8 +26,9 @@ pub enum YeetKey {
 pub struct Yeet {
     message: String,
     author: Address,
+    id: String,
+    parent_id: String,
     likes: u64,
-    replies: Vec<Yeet>
 }
 
 #[contractimpl]
@@ -33,8 +41,9 @@ impl YContract {
         let submitted_yeet = Yeet {
             message: message,
             author: user.clone(),
+            id: id.clone(),
+            parent_id: String::from_str(&env, ""),
             likes: 0,
-            replies: Vec::new(&env)
         };
 
         env.storage().temporary().set(&yeet_key, &submitted_yeet);
@@ -46,30 +55,33 @@ impl YContract {
         submitted_yeet
     }
 
-    pub fn reply(env: Env, user: Address, reply: String, id: String, added_validity: u32) -> Yeet {
+    pub fn reply(env: Env, user: Address, reply: String, id: String, parent_id: String, added_validity: u32) -> Result<Yeet, Error> {
         user.require_auth();
 
-        let yeet_key = YeetKey::Of(id.clone());
+        let parent_yeet_key = YeetKey::Of(parent_id.clone());
 
-        let mut root_yeet: Yeet = env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesn't exist");
+        match env.storage().temporary().get::<YeetKey, Yeet>(&parent_yeet_key) {
+            Some(_) => {
+                let yeet_key = YeetKey::Of(id.clone());
 
-        let reply_yeet: Vec<Yeet> = vec![&env, Yeet {
-            message: reply,
-            author: user.clone(),
-            likes: 0,
-            replies: Vec::new(&env),
-        }];
+                let reply_yeet: Yeet = Yeet {
+                    message: reply,
+                    author: user.clone(),
+                    id: id.clone(),
+                    parent_id: parent_id.clone(),
+                    likes: 0,
+                };
 
-        root_yeet.replies.append(&reply_yeet);
+                env.storage().temporary().set(&yeet_key, &reply_yeet);
 
-        env.storage().temporary().set(&yeet_key, &root_yeet);
+                env.events().publish((YEET, symbol_short!("yeet")), reply_yeet.clone());
 
-        env.events().publish((YEET, symbol_short!("yeet")), root_yeet.clone());
+                Self::loop_up_the_tree(env, id, added_validity);
 
-        env.storage().temporary().extend_ttl(&yeet_key, added_validity, added_validity);
-
-        root_yeet
-
+                Ok(reply_yeet)
+            },
+            None => Err(Error::NoParentYeet)
+        }
     }
 
     pub fn sheesh(env: Env, user: Address, id: String, added_validity: u32) -> Yeet {
@@ -85,7 +97,7 @@ impl YContract {
 
         env.events().publish((YEET, symbol_short!("yeet")), root_yeet.clone());
 
-        env.storage().temporary().extend_ttl(&yeet_key, added_validity, added_validity);
+        Self::loop_up_the_tree(env, id, added_validity);
 
         root_yeet
     }
@@ -94,6 +106,30 @@ impl YContract {
         let yeet_key = YeetKey::Of(id.clone());
 
         env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesn't exist")
+    }
+
+    fn loop_up_the_tree(env: Env, id: String, added_validity: u32) {
+        let mut temp_id: String = id;
+    
+        loop {
+            let key = YeetKey::Of(temp_id.clone());
+    
+            match env.storage().temporary().get::<YeetKey, Yeet>(&key) {
+                Some(yeet) => {
+                    env.storage().temporary().extend_ttl(&key, added_validity, added_validity);
+    
+                    temp_id = yeet.parent_id.clone();
+    
+                    if temp_id.len() > 0 {
+                    } else {
+                        break;
+                    }
+                },
+                None => {
+                    break;
+                }
+            }
+        }
     }
 }
 
