@@ -6,7 +6,7 @@ y
   <a href="https://sloths-warsaw.vercel.ap">Website</a> |
   <a href="https://github.com/Stellarnauts/y/tree/contracts">Github</a>
   <p align="center">
-    <img src="./assets/Logo.png" alt="Logo" width="300" height="auto">
+    <img src="./assets/logo.png" alt="Logo" width="300" height="auto">
   </p>
 </h4>
 
