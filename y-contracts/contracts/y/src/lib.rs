@@ -27,7 +27,7 @@ pub struct Yeet {
     message: String,
     author: Address,
     id: String,
-    parent_id: Option<String>,
+    parent_id: String,
     likes: u64,
 }
 
@@ -42,7 +42,7 @@ impl YContract {
             message: message,
             author: user.clone(),
             id: id.clone(),
-            parent_id: None,
+            parent_id: String::from_str(&env, ""),
             likes: 0,
         };
 
@@ -68,7 +68,7 @@ impl YContract {
                     message: reply,
                     author: user.clone(),
                     id: id.clone(),
-                    parent_id: Some(parent_id.clone()),
+                    parent_id: parent_id.clone(),
                     likes: 0,
                 };
 
@@ -109,22 +109,27 @@ impl YContract {
     }
 
     fn loop_up_the_tree(env: Env, id: String, added_validity: u32) {
-        let mut temp_id: Option<String> = Some(id); 
-
-        while temp_id.is_some() {
-            let key = YeetKey::Of(temp_id.unwrap().clone());
-
+        let mut temp_id: String = id;
+    
+        loop {
+            let key = YeetKey::Of(temp_id.clone());
+    
             match env.storage().temporary().get::<YeetKey, Yeet>(&key) {
-                Some(unwrapped_yeet) => {
+                Some(yeet) => {
                     env.storage().temporary().extend_ttl(&key, added_validity, added_validity);
-
-                    temp_id = unwrapped_yeet.parent_id;
+    
+                    temp_id = yeet.parent_id.clone();
+    
+                    if temp_id.len() > 0 {
+                    } else {
+                        break;
+                    }
                 },
                 None => {
-                    break
+                    break;
                 }
-            } 
-        };
+            }
+        }
     }
 }
 
