@@ -25,7 +25,7 @@ pub struct Yeet {
 
 #[contractimpl]
 impl YContract {
-    pub fn yeet(env: Env, user: Address, message: String, id: String, initial_validity: u32) {
+    pub fn yeet(env: Env, user: Address, message: String, id: String, initial_validity: u32) -> Yeet {
         user.require_auth();
 
         let yeet_key = YeetKey::Of(id.clone());
@@ -39,12 +39,14 @@ impl YContract {
 
         env.storage().temporary().set(&yeet_key, &submitted_yeet);
 
-        env.events().publish((YEET, symbol_short!("yeet")), submitted_yeet);
+        env.events().publish((YEET, symbol_short!("yeet")), submitted_yeet.clone());
 
         env.storage().temporary().extend_ttl(&yeet_key, initial_validity, initial_validity);
+
+        submitted_yeet
     }
 
-    pub fn reply(env: Env, user: Address, reply: String, id: String, added_validity: u32) {
+    pub fn reply(env: Env, user: Address, reply: String, id: String, added_validity: u32) -> Yeet {
         user.require_auth();
 
         let yeet_key = YeetKey::Of(id.clone());
@@ -62,13 +64,15 @@ impl YContract {
 
         env.storage().temporary().set(&yeet_key, &root_yeet);
 
-        env.events().publish((YEET, symbol_short!("yeet")), root_yeet);
+        env.events().publish((YEET, symbol_short!("yeet")), root_yeet.clone());
 
         env.storage().temporary().extend_ttl(&yeet_key, added_validity, added_validity);
 
+        root_yeet
+
     }
 
-    pub fn sheesh(env: Env, user: Address, id: String, added_validity: u32) {
+    pub fn sheesh(env: Env, user: Address, id: String, added_validity: u32) -> Yeet {
         user.require_auth();
 
         let yeet_key = YeetKey::Of(id.clone());
@@ -79,9 +83,11 @@ impl YContract {
 
         env.storage().temporary().set(&yeet_key, &root_yeet);
 
-        env.events().publish((YEET, symbol_short!("yeet")), root_yeet);
+        env.events().publish((YEET, symbol_short!("yeet")), root_yeet.clone());
 
         env.storage().temporary().extend_ttl(&yeet_key, added_validity, added_validity);
+
+        root_yeet
     }
 
     pub fn get_yeet(env: Env, id: String) -> Yeet {
