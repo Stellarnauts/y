@@ -3,15 +3,19 @@ use core::fmt::{Debug, Formatter};
 
 use soroban_sdk::{contract, contractimpl, contracttype, crypto, symbol_short, vec, Address, BytesN, Env, FromVal, String, Symbol, Vec};
 
+const YEET: Symbol = symbol_short!("YEET");
+
 #[contract]
 pub struct YContract;
 
 #[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum YeetKey {
     Of(String)
 }
 
 #[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Yeet {
     message: String,
     author: Address,
@@ -35,7 +39,7 @@ impl YContract {
 
         env.storage().temporary().set(&yeet_key, &submitted_yeet);
 
-        env.events().publish(&yeet_key, submitted_yeet);
+        env.events().publish((YEET, symbol_short!("yeet")), submitted_yeet);
 
         env.storage().temporary().extend_ttl(&yeet_key, initial_validity, initial_validity);
     }
@@ -58,6 +62,8 @@ impl YContract {
 
         env.storage().temporary().set(&yeet_key, &root_yeet);
 
+        env.events().publish((YEET, symbol_short!("yeet")), root_yeet);
+
         env.storage().temporary().extend_ttl(&yeet_key, added_validity, added_validity);
 
     }
@@ -72,6 +78,8 @@ impl YContract {
         root_yeet.likes += 1;
 
         env.storage().temporary().set(&yeet_key, &root_yeet);
+
+        env.events().publish((YEET, symbol_short!("yeet")), root_yeet);
 
         env.storage().temporary().extend_ttl(&yeet_key, added_validity, added_validity);
     }
