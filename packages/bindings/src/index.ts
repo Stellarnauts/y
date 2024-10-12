@@ -18,7 +18,6 @@ if (typeof window !== "undefined") {
 export const networks = {
   testnet: {
     networkPassphrase: "Test SDF Network ; September 2015",
-<<<<<<< HEAD
     contractId: "CAFUQONPIJP7ZBXSZCHAY2PIHY4PSGSU2OGJ3HKVD62APNWC5HJS6HVU",
   }
 } as const
@@ -27,11 +26,6 @@ export const Errors = {
   1: {message:"NoParentYeet"}
 }
 export type YeetKey = {tag: "Of", values: readonly [string]};
-=======
-    contractId: "CAU4MPUT3SR4NRPOIAVQ4N2ET7FUWHBCKTMUKF65Q5KPAQQMCTSOFOSO",
-  },
-} as const;
->>>>>>> origin
 
 export type YeetKey = { tag: "Of"; values: readonly [string] };
 
@@ -43,10 +37,6 @@ export interface Yeet {
   parent_id: string;
 }
 
-<<<<<<< HEAD
-=======
-export const Errors = {};
->>>>>>> origin
 
 export interface Client {
   /**
@@ -70,64 +60,31 @@ export interface Client {
        */
       timeoutInSeconds?: number;
 
-<<<<<<< HEAD
     /**
      * Whether to automatically simulate the transaction when constructing the AssembledTransaction. Default: true
      */
     simulate?: boolean;
   }) => Promise<AssembledTransaction<Yeet>>
-=======
-      /**
-       * Whether to automatically simulate the transaction when constructing the AssembledTransaction. Default: true
-       */
-      simulate?: boolean;
-    }
-  ) => Promise<AssembledTransaction<Yeet>>;
->>>>>>> origin
 
   /**
    * Construct and simulate a reply transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
    */
-<<<<<<< HEAD
   reply: ({user, reply, id, parent_id, added_validity}: {user: string, reply: string, id: string, parent_id: string, added_validity: u32}, options?: {
     /**
      * The fee to pay for the transaction. Default: BASE_FEE
      */
     fee?: number;
-=======
-  reply: (
-    {
-      user,
-      reply,
-      id,
-      added_validity,
-    }: { user: string; reply: string; id: string; added_validity: u32 },
-    options?: {
-      /**
-       * The fee to pay for the transaction. Default: BASE_FEE
-       */
-      fee?: number;
->>>>>>> origin
 
       /**
        * The maximum amount of time to wait for the transaction to complete. Default: DEFAULT_TIMEOUT
        */
       timeoutInSeconds?: number;
 
-<<<<<<< HEAD
     /**
      * Whether to automatically simulate the transaction when constructing the AssembledTransaction. Default: true
      */
     simulate?: boolean;
   }) => Promise<AssembledTransaction<Result<Yeet>>>
-=======
-      /**
-       * Whether to automatically simulate the transaction when constructing the AssembledTransaction. Default: true
-       */
-      simulate?: boolean;
-    }
-  ) => Promise<AssembledTransaction<Yeet>>;
->>>>>>> origin
 
   /**
    * Construct and simulate a sheesh transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
@@ -149,20 +106,11 @@ export interface Client {
        */
       timeoutInSeconds?: number;
 
-<<<<<<< HEAD
     /**
      * Whether to automatically simulate the transaction when constructing the AssembledTransaction. Default: true
      */
     simulate?: boolean;
   }) => Promise<AssembledTransaction<Yeet>>
-=======
-      /**
-       * Whether to automatically simulate the transaction when constructing the AssembledTransaction. Default: true
-       */
-      simulate?: boolean;
-    }
-  ) => Promise<AssembledTransaction<Yeet>>;
->>>>>>> origin
 
   /**
    * Construct and simulate a get_yeet transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
@@ -190,7 +138,6 @@ export interface Client {
 export class Client extends ContractClient {
   constructor(public readonly options: ContractClientOptions) {
     super(
-<<<<<<< HEAD
       new ContractSpec([ "AAAABAAAAAAAAAAAAAAABUVycm9yAAAAAAAAAQAAAAAAAAAMTm9QYXJlbnRZZWV0AAAAAQ==",
         "AAAAAgAAAAAAAAAAAAAAB1llZXRLZXkAAAAAAQAAAAEAAAAAAAAAAk9mAAAAAAABAAAAEA==",
         "AAAAAQAAAAAAAAAAAAAABFllZXQAAAAFAAAAAAAAAAZhdXRob3IAAAAAABMAAAAAAAAAAmlkAAAAAAAQAAAAAAAAAAVsaWtlcwAAAAAAAAYAAAAAAAAAB21lc3NhZ2UAAAAAEAAAAAAAAAAJcGFyZW50X2lkAAAAAAAAEA==",
@@ -198,31 +145,13 @@ export class Client extends ContractClient {
         "AAAAAAAAAAAAAAAFcmVwbHkAAAAAAAAFAAAAAAAAAAR1c2VyAAAAEwAAAAAAAAAFcmVwbHkAAAAAAAAQAAAAAAAAAAJpZAAAAAAAEAAAAAAAAAAJcGFyZW50X2lkAAAAAAAAEAAAAAAAAAAOYWRkZWRfdmFsaWRpdHkAAAAAAAQAAAABAAAD6QAAB9AAAAAEWWVldAAAAAM=",
         "AAAAAAAAAAAAAAAGc2hlZXNoAAAAAAADAAAAAAAAAAR1c2VyAAAAEwAAAAAAAAACaWQAAAAAABAAAAAAAAAADmFkZGVkX3ZhbGlkaXR5AAAAAAAEAAAAAQAAB9AAAAAEWWVldA==",
         "AAAAAAAAAAAAAAAIZ2V0X3llZXQAAAABAAAAAAAAAAJpZAAAAAAAEAAAAAEAAAfQAAAABFllZXQ=" ]),
-=======
-      new ContractSpec([
-        "AAAAAgAAAAAAAAAAAAAAB1llZXRLZXkAAAAAAQAAAAEAAAAAAAAAAk9mAAAAAAABAAAAEA==",
-        "AAAAAQAAAAAAAAAAAAAABFllZXQAAAAEAAAAAAAAAAZhdXRob3IAAAAAABMAAAAAAAAABWxpa2VzAAAAAAAABgAAAAAAAAAHbWVzc2FnZQAAAAAQAAAAAAAAAAdyZXBsaWVzAAAAA+oAAAfQAAAABFllZXQ=",
-        "AAAAAAAAAAAAAAAEeWVldAAAAAQAAAAAAAAABHVzZXIAAAATAAAAAAAAAAdtZXNzYWdlAAAAABAAAAAAAAAAAmlkAAAAAAAQAAAAAAAAABBpbml0aWFsX3ZhbGlkaXR5AAAABAAAAAEAAAfQAAAABFllZXQ=",
-        "AAAAAAAAAAAAAAAFcmVwbHkAAAAAAAAEAAAAAAAAAAR1c2VyAAAAEwAAAAAAAAAFcmVwbHkAAAAAAAAQAAAAAAAAAAJpZAAAAAAAEAAAAAAAAAAOYWRkZWRfdmFsaWRpdHkAAAAAAAQAAAABAAAH0AAAAARZZWV0",
-        "AAAAAAAAAAAAAAAGc2hlZXNoAAAAAAADAAAAAAAAAAR1c2VyAAAAEwAAAAAAAAACaWQAAAAAABAAAAAAAAAADmFkZGVkX3ZhbGlkaXR5AAAAAAAEAAAAAQAAB9AAAAAEWWVldA==",
-        "AAAAAAAAAAAAAAAIZ2V0X3llZXQAAAABAAAAAAAAAAJpZAAAAAAAEAAAAAEAAAfQAAAABFllZXQ=",
-      ]),
->>>>>>> origin
       options
     );
   }
   public readonly fromJSON = {
     yeet: this.txFromJSON<Yeet>,
-<<<<<<< HEAD
         reply: this.txFromJSON<Result<Yeet>>,
         sheesh: this.txFromJSON<Yeet>,
         get_yeet: this.txFromJSON<Yeet>
   }
 }
-=======
-    reply: this.txFromJSON<Yeet>,
-    sheesh: this.txFromJSON<Yeet>,
-    get_yeet: this.txFromJSON<Yeet>,
-  };
-}
->>>>>>> origin
