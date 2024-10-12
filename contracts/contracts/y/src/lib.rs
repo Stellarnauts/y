@@ -26,12 +26,16 @@ impl YContract {
 
         let yeet_key = YeetKey::Of(id.clone());
 
-        env.storage().temporary().set(&yeet_key, &Yeet {
+        let submitted_yeet = Yeet {
             message: message,
             author: user.clone(),
             likes: 0,
             replies: Vec::new(&env)
-        });
+        };
+
+        env.storage().temporary().set(&yeet_key, &submitted_yeet);
+
+        env.events().publish(&yeet_key, submitted_yeet);
 
         env.storage().temporary().extend_ttl(&yeet_key, initial_validity, initial_validity);
     }
