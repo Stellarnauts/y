@@ -119,6 +119,16 @@ fn test_sheesh() {
                 contract_id.clone(),
                 (YEET, symbol_short!("yeet")).into_val(&env),
                 Yeet {
+                    message: message.clone(),
+                    author: user_1.clone(),
+                    likes: 0,
+                    replies: Vec::new(&env)
+                }.into_val(&env)
+            ),
+            (
+                contract_id.clone(),
+                (YEET, symbol_short!("yeet")).into_val(&env),
+                Yeet {
                     message: message,
                     author: user_1,
                     likes: 1,
