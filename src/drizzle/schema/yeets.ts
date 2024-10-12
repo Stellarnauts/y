@@ -4,6 +4,8 @@ import { id } from "./columns/id";
 
 export const yeets = sqliteTable("yeets", {
   id: id(),
-  message: text("message"),
+  hash: text("hash").notNull(),
+  message: text("message").notNull(),
+  createdBy: text("created_by").notNull(),
   createdAt: createdAt(),
 });

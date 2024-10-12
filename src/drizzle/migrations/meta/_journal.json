@@ -8,6 +8,13 @@
       "when": 1728745984277,
       "tag": "0000_daffy_paladin",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1728760613650,
+      "tag": "0001_empty_prodigy",
+      "breakpoints": true
     }
   ]
 }

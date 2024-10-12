@@ -1,5 +1,6 @@
 "use client";
 
+import { WhoamiContextProvider } from "@/contexts/WhoamiContext";
 import { queryClient } from "@/lib/queryClient";
 import { client, trpc } from "@/trpc/client";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -11,8 +12,10 @@ export const Providers: React.FunctionComponent<PropsWithChildren> = ({
 }) => (
   <trpc.Provider client={client} queryClient={queryClient}>
     <QueryClientProvider client={queryClient}>
-      {children}
-      <Toaster />
+      <WhoamiContextProvider>
+        {children}
+        <Toaster />
+      </WhoamiContextProvider>
     </QueryClientProvider>
   </trpc.Provider>
 );
