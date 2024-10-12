@@ -6,7 +6,7 @@ export * as rpc from '@stellar/stellar-sdk/rpc';
 export declare const networks: {
     readonly testnet: {
         readonly networkPassphrase: "Test SDF Network ; September 2015";
-        readonly contractId: "CCWEWOC7XQZTS7CIEMSX4CAZRB2VHFJSZTUVM2F5LR72ETZ7FC77HUE5";
+        readonly contractId: "CAU4MPUT3SR4NRPOIAVQ4N2ET7FUWHBCKTMUKF65Q5KPAQQMCTSOFOSO";
     };
 };
 export type YeetKey = {
@@ -42,7 +42,7 @@ export interface Client {
          * Whether to automatically simulate the transaction when constructing the AssembledTransaction. Default: true
          */
         simulate?: boolean;
-    }) => Promise<AssembledTransaction<null>>;
+    }) => Promise<AssembledTransaction<Yeet>>;
     /**
      * Construct and simulate a reply transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
      */
@@ -64,7 +64,7 @@ export interface Client {
          * Whether to automatically simulate the transaction when constructing the AssembledTransaction. Default: true
          */
         simulate?: boolean;
-    }) => Promise<AssembledTransaction<null>>;
+    }) => Promise<AssembledTransaction<Yeet>>;
     /**
      * Construct and simulate a sheesh transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
      */
@@ -85,7 +85,7 @@ export interface Client {
          * Whether to automatically simulate the transaction when constructing the AssembledTransaction. Default: true
          */
         simulate?: boolean;
-    }) => Promise<AssembledTransaction<null>>;
+    }) => Promise<AssembledTransaction<Yeet>>;
     /**
      * Construct and simulate a get_yeet transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
      */
@@ -110,9 +110,9 @@ export declare class Client extends ContractClient {
     readonly options: ContractClientOptions;
     constructor(options: ContractClientOptions);
     readonly fromJSON: {
-        yeet: (json: string) => AssembledTransaction<null>;
-        reply: (json: string) => AssembledTransaction<null>;
-        sheesh: (json: string) => AssembledTransaction<null>;
+        yeet: (json: string) => AssembledTransaction<Yeet>;
+        reply: (json: string) => AssembledTransaction<Yeet>;
+        sheesh: (json: string) => AssembledTransaction<Yeet>;
         get_yeet: (json: string) => AssembledTransaction<Yeet>;
     };
 }
