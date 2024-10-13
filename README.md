@@ -26,17 +26,17 @@ Introducing Y, a new social dApp that leverages Soroban's temporary data storage
 
 ## Screenshots
 
-| Write Yeet                        | Rate Yeet              |
+| Write Yeet                        | Like Yeet              |
 | --------------------------------- | --------------------------------- |
-| ![dashboard 1](assets/create.png) | ![dashboard 2](assets/worldcoin.png) |
+| ![dashboard 1](assets/write.png) | ![dashboard 2](assets/like.png) |
 
 |  Reply                          | Validate                      |
 | --------------------------------- | --------------------------------- |
-| ![dashboard 3](assets/view.png) | ![dashboard 4](assets/popup.png) |
+| ![dashboard 3](assets/reply.png) | ![dashboard 4](assets/popup.png) |
 
 ## Links
 
-- [Live dApp on Vercel](https://chain-notes.vercel.app/)
+- [Live dApp on Vercel](https://y-zeta-six-11.vercel.app/)
 - [Github: Dapp monorepo](https://github.com/Stellarnauts/y)
 - [Presentation slides](https://www.canva.com/design/DAGTaO9reGI/W5teo1eoYNaAERMCbGnczw/edit?utm_content=DAGTaO9reGI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 - [Presentation video](https://www.youtube.com/watch?v=9Iuu-B8WA6M)
