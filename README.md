@@ -26,13 +26,13 @@ Introducing Y, a new social dApp that leverages Soroban's temporary data storage
 
 ## Screenshots
 
-| Write Yeet                        | Like Yeet              |
-| --------------------------------- | --------------------------------- |
+| Write Yeet                       | Like Yeet                       |
+| -------------------------------- | ------------------------------- |
 | ![dashboard 1](assets/write.png) | ![dashboard 2](assets/like.png) |
 
-|  Reply                          | Validate                      |
-| --------------------------------- | --------------------------------- |
-| ![dashboard 3](assets/reply.png) | ![dashboard 4](assets/popup.png) |
+| Reply                            | Verify                            |
+| -------------------------------- | --------------------------------- |
+| ![dashboard 3](assets/reply.png) | ![dashboard 4](assets/verify.png) |
 
 ## Links
 
@@ -42,8 +42,8 @@ Introducing Y, a new social dApp that leverages Soroban's temporary data storage
 - [Presentation video](https://www.youtube.com/watch?v=9Iuu-B8WA6M)
 
 ### Deployed contracts
-- [y on stellar](https://stellar.expert/explorer/testnet/contract/CAFUQONPIJP7ZBXSZCHAY2PIHY4PSGSU2OGJ3HKVD62APNWC5HJS6HVU)
 
+- [y on stellar](https://stellar.expert/explorer/testnet/contract/CAFUQONPIJP7ZBXSZCHAY2PIHY4PSGSU2OGJ3HKVD62APNWC5HJS6HVU)
 
 ## Team
 
