@@ -170,7 +170,7 @@ export const Yeet: React.FunctionComponent<YeetProps> = ({ yeet }) => {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="overflow-hidden"
+                className="-mx-4 overflow-hidden px-4"
               >
                 <div className="pt-4">
                   <YeetToYeet yeet={yeet} onYeet={() => setIsReplying(false)} />

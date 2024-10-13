@@ -1,6 +1,7 @@
 "use client";
 
 import { ErrorAlert } from "@/components/ErrorAlert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/shadcn/alert";
 import { Skeleton } from "@/components/shadcn/skeleton";
 import { Yeet } from "@/components/Yeet";
 import { useWhoamiContext } from "@/hooks/useWhoamiContext";
@@ -9,6 +10,7 @@ import { account } from "@/lib/passkey/client";
 import { trpc } from "@/trpc/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { getQueryKey } from "@trpc/react-query";
+import { LucideInfo } from "lucide-react";
 import { toast } from "sonner";
 import { YeetForm } from "./YeetForm";
 
@@ -74,8 +76,14 @@ export default function Start() {
             </>
           ) : yeetsQuery.isError ? (
             <ErrorAlert message={yeetsQuery.error.message} />
-          ) : (
+          ) : yeetsQuery.data.length ? (
             yeetsQuery.data.map((yeet) => <Yeet key={yeet.id} yeet={yeet} />)
+          ) : (
+            <Alert>
+              <LucideInfo className="size-4" />
+              <AlertTitle>No yeets yet.</AlertTitle>
+              <AlertDescription>Be the first to pop a yeet!</AlertDescription>
+            </Alert>
           )}
         </div>
       </div>
