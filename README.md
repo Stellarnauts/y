@@ -1,12 +1,12 @@
 <h1 align="center">
-y
+<img src="./assets/logo.png" width="30" height="auto">
 </h1>
 
 <h4 align="center">
-  <a href="https://sloths-warsaw.vercel.ap">Website</a> |
-  <a href="https://github.com/Stellarnauts/y/tree/contracts">Github</a>
+  <a href="https://y-zeta-six-11.vercel.app/">Website</a> |
+  <a href="https://github.com/Stellarnauts/y">Github</a>
   <p align="center">
-    <img src="./assets/logo.png" alt="Logo" width="300" height="auto">
+    <img src="./assets/github_logo.png" alt="Logo" width="300" height="auto">
   </p>
 </h4>
 
