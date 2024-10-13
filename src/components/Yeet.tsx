@@ -8,10 +8,10 @@ import { Yeet as ContractYeet } from "bindings";
 import { format } from "date-fns/format";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  LucideCheck,
-  LucideHeart,
-  LucideReply,
-  LucideShieldCheck,
+    LucideCheck,
+    LucideHeart,
+    LucideReply,
+    LucideShieldCheck,
 } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
@@ -20,19 +20,19 @@ import { Alert, AlertDescription, AlertTitle } from "./shadcn/alert";
 import { Button } from "./shadcn/button";
 import { Card, CardContent, CardFooter } from "./shadcn/card";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
 } from "./shadcn/dialog";
 import { Input } from "./shadcn/input";
 import { Label } from "./shadcn/label";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
 } from "./shadcn/tooltip";
 import { Spinner } from "./Spinner";
 import { YeetToYeet } from "./YeetToYeet";
@@ -67,6 +67,7 @@ export const Yeet: React.FunctionComponent<YeetProps> = ({ yeet }) => {
 
       console.log(tx);
 
+      // TODO: simulation acting up. "temporary" workaround :)
       return {} as unknown as ContractYeet;
       //   return scValToNative(tx.simulation?.result?.retval);
     },

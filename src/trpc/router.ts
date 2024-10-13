@@ -13,6 +13,7 @@ type NestedYeet = YeetSelectModel & { yeets: NestedYeet[] };
 export const router = t.router({
   yeets: t.router({
     list: t.procedure.query(async () => {
+      // TODO: recursive query some day
       const yeets = await drizzle.query.yeets.findMany({
         where: gt(schema.yeets.expiresAt, new Date().toISOString()),
         orderBy: desc(schema.yeets.createdAt),
@@ -82,6 +83,25 @@ export const router = t.router({
           })
           .returning();
 
+        if (yeet.parentId) {
+          let pid: string | null = yeet.parentId;
+
+          // i liek while loops
+          while (pid) {
+            const [yeet] = await drizzle
+              .update(schema.yeets)
+              .set({
+                expiresAt: new Date(
+                  new Date().getTime() + 1000 * 60 * 60,
+                ).toISOString(),
+              })
+              .where(eq(schema.yeets.id, pid))
+              .returning();
+
+            pid = yeet.parentId as string | null;
+          }
+        }
+
         return yeet;
       }),
     sheeshes: t.router({
@@ -109,9 +129,31 @@ export const router = t.router({
             .update(schema.yeets)
             .set({
               sheeshes: likes,
+              expiresAt: new Date(
+                new Date().getTime() + 1000 * 60 * 60,
+              ).toISOString(),
             })
             .where(eq(schema.yeets.id, id))
             .returning();
+
+          if (yeet.parentId) {
+            let pid: string | null = yeet.parentId;
+
+            // i liek while loops
+            while (pid) {
+              const [yeet] = await drizzle
+                .update(schema.yeets)
+                .set({
+                  expiresAt: new Date(
+                    new Date().getTime() + 1000 * 60 * 60,
+                  ).toISOString(),
+                })
+                .where(eq(schema.yeets.id, pid))
+                .returning();
+
+              pid = yeet.parentId as string | null;
+            }
+          }
 
           return yeet;
         }),
