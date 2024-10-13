@@ -9,6 +9,10 @@ export const config = {
     connectionUrl: process.env.TURSO_CONNECTION_URL as string,
     authToken: process.env.TURSO_AUTH_TOKEN as string,
   },
+  launchtube: {
+    url: process.env.LAUNCHTUBE_URL as string,
+    jwt: process.env.LAUNCHTUBE_JWT as string,
+  },
   factoryContractAddress: process.env
     .NEXT_PUBLIC_FACTORY_CONTRACT_ADDRESS as string,
   stellar: {
