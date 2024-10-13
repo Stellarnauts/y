@@ -53,7 +53,7 @@ Introducing Y, a new social dApp that leverages Soroban's temporary data storage
 
 ### Deployed contracts
 
-- [y on stellar](https://stellar.expert/explorer/testnet/contract/CAFUQONPIJP7ZBXSZCHAY2PIHY4PSGSU2OGJ3HKVD62APNWC5HJS6HVU)
+- [y on stellar](https://stellar.expert/explorer/testnet/contract/CC53VVB4VWJWKP75I3ZFP3ZOYUOW7Z666CC2IPHUD34OZ6PSB75EDP2Y)
 
 ## Team
 
