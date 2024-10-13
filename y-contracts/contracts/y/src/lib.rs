@@ -110,16 +110,16 @@ impl YContract {
 
     fn loop_up_the_tree(env: Env, id: String, added_validity: u32) {
         let mut temp_id: String = id;
-    
+
         loop {
             let key = YeetKey::Of(temp_id.clone());
-    
+
             match env.storage().temporary().get::<YeetKey, Yeet>(&key) {
                 Some(yeet) => {
                     env.storage().temporary().extend_ttl(&key, added_validity, added_validity);
-    
+
                     temp_id = yeet.parent_id.clone();
-    
+
                     if temp_id.len() > 0 {
                     } else {
                         break;

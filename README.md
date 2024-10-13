@@ -26,24 +26,23 @@ Introducing Y, a new social dApp that leverages Soroban's temporary data storage
 
 ## Screenshots
 
-| Create note                      | Worldcoin pop-up              |
+| Write Yeet                        | Rate Yeet              |
 | --------------------------------- | --------------------------------- |
 | ![dashboard 1](assets/create.png) | ![dashboard 2](assets/worldcoin.png) |
 
-|  View notes                          | Metamask Snap pop-up                      |
+|  Reply                          | Validate                      |
 | --------------------------------- | --------------------------------- |
 | ![dashboard 3](assets/view.png) | ![dashboard 4](assets/popup.png) |
 
 ## Links
 
 - [Live dApp on Vercel](https://chain-notes.vercel.app/)
-- [Github: Solidity contract and frontend dashboard](https://github.com/chain-notes-brussels/chain-notes-snap)
-- [Github: Metamask Snap](https://github.com/chain-notes-brussels/snap)
-- [Presentation slides](https://docs.google.com/presentation/d/1Xd99gtVZSGbwSzWEGFpmDQCWXY6m0bKK811WZNHsah0/edit?usp=sharing)
+- [Github: Dapp monorepo](https://github.com/Stellarnauts/y)
+- [Presentation slides](https://www.canva.com/design/DAGTaO9reGI/W5teo1eoYNaAERMCbGnczw/edit?utm_content=DAGTaO9reGI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 - [Presentation video](https://www.youtube.com/watch?v=9Iuu-B8WA6M)
 
 ### Deployed contracts
-- [y on stellar](https://stellar.expert/explorer/testnet/contract/CAU4MPUT3SR4NRPOIAVQ4N2ET7FUWHBCKTMUKF65Q5KPAQQMCTSOFOSO)
+- [y on stellar](https://stellar.expert/explorer/testnet/contract/CAFUQONPIJP7ZBXSZCHAY2PIHY4PSGSU2OGJ3HKVD62APNWC5HJS6HVU)
 
 
 ## Team
