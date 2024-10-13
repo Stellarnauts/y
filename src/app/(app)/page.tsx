@@ -19,7 +19,9 @@ export default function Start() {
 
   const { whoami } = useWhoamiContext();
 
-  const yeetsQuery = trpc.yeets.list.useQuery();
+  const yeetsQuery = trpc.yeets.list.useQuery(undefined, {
+    refetchInterval: 5000,
+  });
 
   const createYeetMutation = trpc.yeets.create.useMutation({
     onSuccess: async () => {
