@@ -1,0 +1,1 @@
+ALTER TABLE `yeets` ADD `sheeshes` integer DEFAULT 0 NOT NULL;

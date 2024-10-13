@@ -32,7 +32,7 @@ export default function Start() {
   return (
     <>
       <div className="space-y-8">
-        <div className="space-y-4">
+        <div className="my-4 space-y-4">
           <YeetForm
             onSubmit={async (data) => {
               if (!whoami) {

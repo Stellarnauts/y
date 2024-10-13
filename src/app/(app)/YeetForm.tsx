@@ -7,7 +7,6 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/shadcn/form";
 import { Input } from "@/components/shadcn/input";
@@ -44,13 +43,12 @@ export const YeetForm: React.FunctionComponent<YeetFormProps> = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
         <FormField
           control={form.control}
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Yeet</FormLabel>
               <FormControl>
                 <Input
                   placeholder="Yeet what?"
@@ -58,9 +56,7 @@ export const YeetForm: React.FunctionComponent<YeetFormProps> = ({
                   {...field}
                 />
               </FormControl>
-              <FormDescription>
-                Tell the world about the latest yeets.
-              </FormDescription>
+              <FormDescription>Share a yeet.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
