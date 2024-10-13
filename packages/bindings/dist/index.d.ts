@@ -6,11 +6,14 @@ export * as rpc from '@stellar/stellar-sdk/rpc';
 export declare const networks: {
     readonly testnet: {
         readonly networkPassphrase: "Test SDF Network ; September 2015";
-        readonly contractId: "CAFUQONPIJP7ZBXSZCHAY2PIHY4PSGSU2OGJ3HKVD62APNWC5HJS6HVU";
+        readonly contractId: "CC53VVB4VWJWKP75I3ZFP3ZOYUOW7Z666CC2IPHUD34OZ6PSB75EDP2Y";
     };
 };
 export declare const Errors: {
     1: {
+        message: string;
+    };
+    2: {
         message: string;
     };
 };
@@ -110,7 +113,7 @@ export interface Client {
          * Whether to automatically simulate the transaction when constructing the AssembledTransaction. Default: true
          */
         simulate?: boolean;
-    }) => Promise<AssembledTransaction<Yeet>>;
+    }) => Promise<AssembledTransaction<Result<Yeet>>>;
 }
 export declare class Client extends ContractClient {
     readonly options: ContractClientOptions;
@@ -119,6 +122,6 @@ export declare class Client extends ContractClient {
         yeet: (json: string) => AssembledTransaction<Yeet>;
         reply: (json: string) => AssembledTransaction<Result<Yeet, import("@stellar/stellar-sdk/contract").ErrorMessage>>;
         sheesh: (json: string) => AssembledTransaction<Yeet>;
-        get_yeet: (json: string) => AssembledTransaction<Yeet>;
+        get_yeet: (json: string) => AssembledTransaction<Result<Yeet, import("@stellar/stellar-sdk/contract").ErrorMessage>>;
     };
 }
