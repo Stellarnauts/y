@@ -10,6 +10,7 @@ const YEET: Symbol = symbol_short!("YEET");
 #[repr(u32)]
 pub enum Error {
     NoParentYeet = 1,
+    ThatYeetDoesNotExistStupid = 2
 }
 
 #[contract]
@@ -102,10 +103,16 @@ impl YContract {
         root_yeet
     }
 
-    pub fn get_yeet(env: Env, id: String) -> Yeet {
+    pub fn get_yeet(env: Env, id: String) -> Result<Yeet, Error> {
         let yeet_key = YeetKey::Of(id.clone());
 
-        env.storage().temporary().get(&yeet_key).expect("This fucking yeet doesn't exist")
+        match env.storage().temporary().has(&yeet_key) {
+            true => {
+                env.storage().temporary().get(&yeet_key).unwrap()
+            },
+            false => Err(Error::ThatYeetDoesNotExistStupid)
+
+        }
     }
 
     fn loop_up_the_tree(env: Env, id: String, added_validity: u32) {
