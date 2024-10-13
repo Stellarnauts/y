@@ -1,0 +1,1 @@
+ALTER TABLE `yeets` ADD `parent_id` text REFERENCES yeets(id);

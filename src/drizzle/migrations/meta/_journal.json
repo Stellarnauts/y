@@ -15,6 +15,20 @@
       "when": 1728760613650,
       "tag": "0001_empty_prodigy",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1728777388851,
+      "tag": "0002_calm_carnage",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1728780811963,
+      "tag": "0003_light_puck",
+      "breakpoints": true
     }
   ]
 }
