@@ -1,7 +1,6 @@
 import { config } from "@/config";
 import { createClient } from "@libsql/client";
 import { drizzle as d } from "drizzle-orm/libsql";
-import { migrate } from "drizzle-orm/libsql/migrator";
 import { yeets } from "./schema/yeets";
 
 export const schema = {
@@ -17,5 +16,3 @@ export const drizzle = d(
     schema,
   },
 );
-
-migrate(drizzle, { migrationsFolder: "./src/drizzle/migrations" });
