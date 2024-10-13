@@ -18,6 +18,7 @@ export const yeets = sqliteTable(
     sheeshes: integer("sheeshes").notNull().default(0),
     createdBy: text("created_by").notNull(),
     createdAt: createdAt(),
+    expiresAt: text("expires_at").notNull(),
   },
   (table) => {
     return {

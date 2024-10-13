@@ -1,0 +1,1 @@
+ALTER TABLE `yeets` ALTER COLUMN "expires_at" TO "expires_at" text DEFAULT (current_timestamp);

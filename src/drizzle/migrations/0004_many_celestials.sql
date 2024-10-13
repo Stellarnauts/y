@@ -1,0 +1,1 @@
+ALTER TABLE `yeets` ADD `expires_at` text NOT NULL;

@@ -17,7 +17,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 const schema = z.object({
-  parentId: z.optional(z.string()),
   message: z.string(),
 });
 
@@ -38,12 +37,18 @@ export const YeetForm: React.FunctionComponent<YeetFormProps> = ({
   });
 
   const {
+    setValue,
     formState: { isSubmitting, isValid },
   } = form;
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+      <form
+        onSubmit={form.handleSubmit((data) =>
+          Promise.resolve(onSubmit(data)).then(() => setValue("message", "")),
+        )}
+        className="space-y-2"
+      >
         <FormField
           control={form.control}
           name="message"

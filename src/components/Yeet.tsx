@@ -2,7 +2,6 @@ import { useWhoamiContext } from "@/hooks/useWhoamiContext";
 import { y } from "@/lib/contracts/y";
 import { account } from "@/lib/passkey/client";
 import { RouterOutputs, trpc } from "@/trpc/client";
-import { scValToNative } from "@stellar/stellar-sdk";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getQueryKey } from "@trpc/react-query";
 import { Yeet as ContractYeet } from "bindings";
@@ -66,7 +65,10 @@ export const Yeet: React.FunctionComponent<YeetProps> = ({ yeet }) => {
     queryFn: async () => {
       const tx = await y.get_yeet({ id: yeet.id });
 
-      return scValToNative(tx.simulationData.result.retval);
+      console.log(tx);
+
+      return {} as unknown as ContractYeet;
+      //   return scValToNative(tx.simulation?.result?.retval);
     },
     enabled: isVerifyDialogOpen,
   });
@@ -191,7 +193,7 @@ export const Yeet: React.FunctionComponent<YeetProps> = ({ yeet }) => {
         open={isVerifyDialogOpen}
         onOpenChange={(open) => setIsVerifyDialogOpen(open)}
       >
-        <DialogContent className="max-w-5xl">
+        <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>Verify yeet</DialogTitle>
             <DialogDescription></DialogDescription>
@@ -211,7 +213,7 @@ export const Yeet: React.FunctionComponent<YeetProps> = ({ yeet }) => {
                   <LucideCheck className="size-4" />
                   <AlertTitle>Verified</AlertTitle>
                   <AlertDescription>
-                    Message and author verification successful!
+                    Message and author verification successful! Sheesh!
                   </AlertDescription>
                 </Alert>
               )}

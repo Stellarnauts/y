@@ -3,7 +3,7 @@ import { YeetSelectModel } from "@/drizzle/schema/yeets";
 import { server } from "@/lib/passkey/server";
 import { scValToNative, xdr } from "@stellar/stellar-sdk";
 import { initTRPC, TRPCError } from "@trpc/server";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, gt } from "drizzle-orm";
 import { z } from "zod";
 
 const t = initTRPC.create();
@@ -14,6 +14,7 @@ export const router = t.router({
   yeets: t.router({
     list: t.procedure.query(async () => {
       const yeets = await drizzle.query.yeets.findMany({
+        where: gt(schema.yeets.expiresAt, new Date().toISOString()),
         orderBy: desc(schema.yeets.createdAt),
       });
 
@@ -75,6 +76,9 @@ export const router = t.router({
             hash: tx.hash,
             message,
             createdBy: author,
+            expiresAt: new Date(
+              new Date().getTime() + 1000 * 60 * 60,
+            ).toISOString(),
           })
           .returning();
 
